@@ -1,0 +1,23 @@
+@import "./reset";
+@import "./_variables.scss";
+@import "./_mixins.scss";
+
+body,
+html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: $font-stack;
+  background-color: #ecf0f1; // A soft gray background color
+}
+
+button {
+  @include transition();
+  cursor: pointer;
+
+  &:hover {
+    background-color: lighten($primary-color, 10%);
+  }
+}
+
+// Other global styles or even some specific styles for the Tic-Tac-Toe game could go here.
