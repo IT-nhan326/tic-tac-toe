@@ -12,7 +12,7 @@ export default {
   methods: {
     startGame() {
       // Navigate to the new game route
-      this.$router.push("/start-game");
+      this.$router.push({ name: "startGame" });
     },
   },
 };
@@ -31,10 +31,12 @@ export default {
   background-color: $primary-color;
   color: white;
   border: none;
-  padding: 10px 20px;
   border-radius: 5px;
   cursor: pointer;
   @include transition(background-color);
+  // Adjustments to make it bigger
+  padding: 20px 40px; // Increased padding
+  font-size: 1.5rem; // Bigger font size
 
   &:hover {
     background-color: $secondary-color;
