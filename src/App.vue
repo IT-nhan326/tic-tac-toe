@@ -11,10 +11,10 @@
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  background-color: black;
-}
-
-nav a.router-link-exact-active {
-  color: #42b983;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-color: #1a2a33;
 }
 </style>

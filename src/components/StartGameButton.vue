@@ -1,7 +1,7 @@
 <template>
   <div class="start-game">
     <transition name="fade">
-      <button class="start-button" @click="startGame">Start Game</button>
+      <button class="start-button" @click="startGame">NEW GAME</button>
     </transition>
   </div>
 </template>
@@ -28,18 +28,21 @@ export default {
 }
 
 .start-button {
-  background-color: $primary-color;
-  color: white;
+  width: 460px;
+  height: 60px;
+  color: #1a2a33;
+  font-weight: 600;
+  background-color: #31c3bd;
+  border-radius: 10px;
   border: none;
-  border-radius: 5px;
+  font-size: 24px;
   cursor: pointer;
-  @include transition(background-color);
-  // Adjustments to make it bigger
-  padding: 20px 40px; // Increased padding
-  font-size: 1.5rem; // Bigger font size
+  transition: box-shadow 0.2s ease-in-out, transform 0.2s ease-in-out;
+  box-shadow: 0 7px #138c87;
 
-  &:hover {
-    background-color: $secondary-color;
+  &:active {
+    box-shadow: 0 5px #138c87;
+    transform: translateY(4px);
   }
 }
 
