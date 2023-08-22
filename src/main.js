@@ -5,6 +5,13 @@ import router from "./router";
 import store from "./store";
 
 import "@/assets/styles/main.scss";
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import { faXmark, faO } from "@fortawesome/free-solid-svg-icons";
+
+library.add(faXmark, faO);
+
+Vue.component("font-awesome-icon", FontAwesomeIcon);
 
 Vue.config.productionTip = false;
 
