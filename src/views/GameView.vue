@@ -1,6 +1,5 @@
 <template>
   <div class="game-view">
-    <img alt="Tic Tac Toe logo" src="../assets/logo.png" />
     <GameBoard />
   </div>
 </template>

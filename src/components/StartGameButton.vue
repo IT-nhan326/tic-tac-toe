@@ -11,7 +11,6 @@ export default {
   name: "StartGame",
   methods: {
     startGame() {
-      // Navigate to the new game route
       this.$router.push({ name: "startGame" });
     },
   },
@@ -44,14 +43,5 @@ export default {
     box-shadow: 0 5px #138c87;
     transform: translateY(4px);
   }
-}
-
-.fade-enter-active,
-.fade-leave-active {
-  @include transition(opacity);
-}
-
-.fade-enter, .fade-leave-to /* .fade-leave-active in <2.1.8 */ {
-  opacity: 0;
 }
 </style>
