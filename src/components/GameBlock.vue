@@ -1,5 +1,8 @@
 <template>
+  <!-- TODO: single line per attribute -->
   <button @click="markBlock" class="game-block">
+    <!-- TODO: make `mark===X` and `mark===O` into computed properties -->
+    <!-- TODO: make ['fas', 'xmark'] and ['fas', 'o'] into data properties -->
     <font-awesome-icon
       v-if="mark === 'X'"
       :icon="['fas', 'xmark']"
@@ -12,6 +15,7 @@
 <script>
 export default {
   name: "GameBlock",
+  // define Type for currentPlayer
   props: ["currentPlayer"],
   data() {
     return {
