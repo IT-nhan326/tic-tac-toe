@@ -1,26 +1,39 @@
 <template>
-  <!-- TODO: single line per attribute -->
-  <button @click="markBlock" class="game-block">
-    <!-- TODO: make `mark===X` and `mark===O` into computed properties -->
-    <!-- TODO: make ['fas', 'xmark'] and ['fas', 'o'] into data properties -->
+  <button
+    @click="markBlock"
+    class="game-block"
+  >
     <font-awesome-icon
-      v-if="mark === 'X'"
-      :icon="['fas', 'xmark']"
+      v-if="checkXPlayer"
+      :icon="faxmarkIcon"
       class="fa-xmark"
     />
-    <font-awesome-icon v-if="mark === 'O'" :icon="['fas', 'o']" class="fa-o" />
+    <font-awesome-icon
+      v-if="checkOPlayer"
+      :icon="faoIcon"
+      class="fa-o"
+    />
   </button>
 </template>
 
 <script>
 export default {
   name: "GameBlock",
-  // define Type for currentPlayer
-  props: ["currentPlayer"],
+  props: { currentPlayer: String },
   data() {
     return {
       mark: "",
+      faxmarkIcon: ["fas", "xmark"],
+      faoIcon: ["fas", "o"],
     };
+  },
+  computed: {
+    checkXPlayer() {
+      return this.mark === "X";
+    },
+    checkOPlayer() {
+      return this.mark === "O";
+    },
   },
   methods: {
     markBlock() {

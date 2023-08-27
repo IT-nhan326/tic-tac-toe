@@ -9,7 +9,11 @@
         @blockClicked="markBlock(Math.floor(index / 3), index % 3)"
       />
     </div>
-    <ResultModal v-if="winner" :result="winner" @reset="resetGame" />
+    <ResultModal
+      v-if="winner"
+      :result="winner"
+      @reset="resetGame"
+    />
   </div>
 </template>
 
