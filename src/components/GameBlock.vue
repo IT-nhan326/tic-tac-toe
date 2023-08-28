@@ -4,12 +4,12 @@
     @click="markBlock"
   >
     <FontAwesomeIcon
-      v-if="checkXPlayer"
+      v-if="isXPlayer"
       :icon="faxmarkIcon"
       class="fa-xmark"
     />
     <FontAwesomeIcon
-      v-if="checkOPlayer"
+      v-if="isOPlayer"
       :icon="faoIcon"
       class="fa-o"
     />
@@ -19,7 +19,12 @@
 <script>
 export default {
   name: "GameBlock",
-  props: { currentPlayer: String },
+  props: {
+    currentPlayer: {
+      type: String,
+      default: "X",
+    },
+  },
   data() {
     return {
       mark: "",
@@ -28,10 +33,10 @@ export default {
     };
   },
   computed: {
-    checkXPlayer() {
+    isXPlayer() {
       return this.mark === "X";
     },
-    checkOPlayer() {
+    isOPlayer() {
       return this.mark === "O";
     },
   },
