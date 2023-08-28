@@ -1,0 +1,40 @@
+{
+  "extends": ["plugin:vue/recommended", "prettier"],
+  "plugins": ["vue", "prettier"],
+  "rules": {
+    "vue/max-attributes-per-line": [
+      "error",
+      {
+        "singleline": {
+          "max": 1
+        },
+        "multiline": {
+          "max": 1
+        }
+      }
+    ],
+    "vue/component-name-in-template-casing": ["error", "PascalCase"],
+    "prettier/prettier": [
+      "error",
+      {
+        "tabWidth": 2,
+        "useTabs": false,
+        "singleQuote": false,
+        "trailingComma": "es5",
+        "semi": true,
+        "printWidth": 80,
+        "arrowParens": "always",
+        "endOfLine": "lf",
+        "htmlWhitespaceSensitivity": "ignore"
+      }
+    ]
+  },
+  "overrides": [
+    {
+      "files": ["*.vue"],
+      "rules": {
+        "prettier/prettier": "off"
+      }
+    }
+  ]
+}

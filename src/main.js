@@ -11,7 +11,7 @@ import { faXmark, faO } from "@fortawesome/free-solid-svg-icons";
 
 library.add(faXmark, faO);
 
-Vue.component("font-awesome-icon", FontAwesomeIcon);
+Vue.component("FontAwesomeIcon", FontAwesomeIcon);
 
 Vue.config.productionTip = false;
 

@@ -1,8 +1,9 @@
 <template>
   <div class="start-game">
-    <transition name="fade">
-      <button class="start-button" @click="startGame">NEW GAME</button>
-    </transition>
+    <button
+      class="start-button"
+      @click="startGame"
+    >NEW GAME</button>
   </div>
 </template>
 

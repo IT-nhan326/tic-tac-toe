@@ -1,7 +1,10 @@
 <template>
   <div class="modal">
     <div class="modal-content">
-      <span class="close" @click="$emit('reset')">&times;</span>
+      <span
+        class="close"
+        @click="$emit('reset')"
+      >&times;</span>
       <p v-if="result === 'tie'">It's a tie!</p>
       <p v-else>Player {{ result }} wins!</p>
     </div>

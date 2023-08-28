@@ -22,6 +22,10 @@ import GameBlock from "./GameBlock.vue";
 import ResultModal from "./ResultModal.vue";
 
 export default {
+  components: {
+    GameBlock,
+    ResultModal,
+  },
   data() {
     return {
       board: [
@@ -90,10 +94,6 @@ export default {
       this.currentPlayer = "X";
       this.winner = null;
     },
-  },
-  components: {
-    GameBlock,
-    ResultModal,
   },
 };
 </script>

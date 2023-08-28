@@ -1,14 +1,14 @@
 <template>
   <button
-    @click="markBlock"
     class="game-block"
+    @click="markBlock"
   >
-    <font-awesome-icon
+    <FontAwesomeIcon
       v-if="checkXPlayer"
       :icon="faxmarkIcon"
       class="fa-xmark"
     />
-    <font-awesome-icon
+    <FontAwesomeIcon
       v-if="checkOPlayer"
       :icon="faoIcon"
       class="fa-o"
