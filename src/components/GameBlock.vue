@@ -3,33 +3,42 @@
     class="game-block"
     @click="markBlock"
   >
-    <FontAwesomeIcon
+    <!-- should I combine 2 GameIcon into 1? -->
+    <GameIcon
       v-if="isXPlayer"
-      :icon="faxmarkIcon"
+      :icon-name="xIcon"
       class="fa-xmark"
     />
-    <FontAwesomeIcon
+    <GameIcon
       v-if="isOPlayer"
-      :icon="faoIcon"
+      :icon-name="oIcon"
       class="fa-o"
     />
   </button>
 </template>
 
 <script>
+import GameIcon from "./GameIcon.vue";
+import { FaIconEnum } from "../constants/enum.js";
+
 export default {
   name: "GameBlock",
+  components: { GameIcon },
   props: {
     currentPlayer: {
       type: String,
       default: "X",
     },
+    reset: {
+      type: Boolean,
+      default: false,
+    },
   },
   data() {
     return {
       mark: "",
-      faxmarkIcon: ["fas", "xmark"],
-      faoIcon: ["fas", "o"],
+      xIcon: FaIconEnum.xIcon,
+      oIcon: FaIconEnum.oIcon,
     };
   },
   computed: {
@@ -38,6 +47,13 @@ export default {
     },
     isOPlayer() {
       return this.mark === "O";
+    },
+  },
+  watch: {
+    reset(newValue) {
+      if (newValue) {
+        this.mark = null;
+      }
     },
   },
   methods: {

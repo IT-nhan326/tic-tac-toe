@@ -6,25 +6,30 @@
         :key="index"
         :mark="cell"
         :current-player="currentPlayer"
+        :reset="triggerRestart"
         @blockClicked="markBlock(Math.floor(index / 3), index % 3)"
       />
     </div>
-    <ResultModal
-      v-if="winner"
-      :result="winner"
-      @reset="resetGame"
-    />
+
   </div>
 </template>
 
 <script>
 import GameBlock from "./GameBlock.vue";
-import ResultModal from "./ResultModal.vue";
 
 export default {
   components: {
     GameBlock,
-    ResultModal,
+  },
+  props: {
+    triggerRestart: {
+      type: Boolean,
+      default: false,
+    },
+    currentPlayer: {
+      type: String,
+      default: "X",
+    },
   },
   data() {
     return {
@@ -33,23 +38,33 @@ export default {
         ["", "", ""],
         ["", "", ""],
       ],
-      currentPlayer: "X",
-      turn: 0,
       winner: null,
+      turn: 0,
     };
+  },
+  watch: {
+    triggerRestart: function (newVal) {
+      if (newVal) {
+        this.restartGame();
+      }
+    },
   },
   methods: {
     markBlock(rowIndex, colIndex) {
       if (this.board[rowIndex][colIndex] === "") {
-        this.turn++;
         this.board[rowIndex][colIndex] = this.currentPlayer;
+        this.turn++;
 
         if (this.checkWinner()) {
           this.winner = this.currentPlayer;
         } else if (this.board.flat().every((cell) => cell !== "")) {
           this.winner = "tie";
+        }
+
+        if (this.winner === null) {
+          this.$emit("playerTurnFinish", this.turn, this.winner);
         } else {
-          this.currentPlayer = this.turn % 2 === 0 ? "X" : "O";
+          this.restartGame();
         }
       }
     },
@@ -85,14 +100,15 @@ export default {
 
       return false;
     },
-    resetGame() {
+    restartGame() {
       this.board = [
         ["", "", ""],
         ["", "", ""],
         ["", "", ""],
       ];
-      this.currentPlayer = "X";
+      this.$emit("playerTurnFinish");
       this.winner = null;
+      this.turn = 0;
     },
   },
 };
