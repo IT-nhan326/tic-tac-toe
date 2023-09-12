@@ -59,6 +59,8 @@ export default {
 }
 .modal-title {
   display: flex;
+  align-items: center;
+  justify-content: center;
   font-size: 32px;
   margin-block-start: 0.83em;
   margin-block-end: 0.83em;

@@ -1,5 +1,5 @@
 <template>
-  <FontAwesomeIcon :icon="getIcon" />
+  <FontAwesomeIcon :icon="icon" />
 </template>
 
 <script>
@@ -8,29 +8,22 @@ export default {
   props: {
     iconName: {
       type: String,
-      default: "faxmark",
+      default: "faXmark",
     },
   },
   data() {
     return {
       mark: "",
-      faxmarkIcon: ["fas", "xmark"],
-      faoIcon: ["fas", "o"],
-      faRestartIcon: ["fas", "rotate-right"],
+      iconObject: {
+        faXmark: ["fas", "xmark"],
+        faO: ["fas", "o"],
+        faRestartIcon: ["fas", "rotate-right"],
+      },
     };
   },
   computed: {
-    getIcon() {
-      switch (this.iconName) {
-        case "faxmark":
-          return this.faxmarkIcon;
-        case "fao":
-          return this.faoIcon;
-        case "farestart":
-          return this.faRestartIcon;
-        default:
-          return null;
-      }
+    icon() {
+      return this.iconObject[this.iconName];
     },
   },
 };

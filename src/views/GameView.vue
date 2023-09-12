@@ -36,8 +36,8 @@
 import GameBoard from "@/components/GameBoard.vue";
 import ViewHeader from "@/components/ViewHeader.vue";
 import ViewFooter from "@/components/ViewFooter.vue";
-import EndRoundModal from "@/components/smart/modal/EndRoundModal.vue";
-import RestartModal from "@/components/smart/modal/RestartModal.vue";
+import EndRoundModal from "@/components/modal/EndRoundModal.vue";
+import RestartModal from "@/components/modal/RestartModal.vue";
 
 export default {
   name: "GameView",

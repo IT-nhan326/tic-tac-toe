@@ -1,7 +1,7 @@
 "use-strict";
 
 export const FaIconEnum = {
-  xIcon: "faxmark",
-  oIcon: "fao",
-  restartIcon: "farestart",
+  xIcon: "faXmark",
+  oIcon: "faO",
+  restartIcon: "faRestartIcon",
 };

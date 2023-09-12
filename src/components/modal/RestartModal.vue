@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import BasicModal from "@/components/dumb/BasicModal.vue";
+import BasicModal from "@/components/common/BaseModal.vue";
 
 export default {
   components: {
