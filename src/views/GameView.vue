@@ -8,40 +8,45 @@
       <GameBoard
         :trigger-restart="triggerRestart"
         :current-player="currentPlayer"
-        @playerTurnFinish="updateMatchDetails"
+        @playerTurnFinish="updateRoundDetails"
       />
-      <!-- <ViewFooter
-        :player-x-score="xScore"
-        :player-o-score="oScore"
-        :ties-score="tiesScore"
-      /> -->
     </div>
-    <CommonModal
+    <ViewFooter
+      :player-x-score="xScore"
+      :player-o-score="oScore"
+      :ties-score="tiesScore"
+    />
+    <RestartModal
       v-if="isRestartPopup"
-      name="restart-popup"
-      @closeModal="closeRestartModal"
-      @triggerRestart="handleRestartConfirmed"
+      @close="closeRestartModal"
+      @accept="handleRestartConfirmed"
     >
-      <template #modal-title>{{ restartModal.title }}</template>
-      <template #cancel-btn>{{ restartModal.cancelBtn }}</template>
-      <template #accept-btn>{{ restartModal.acceptBtn }}</template>
-    </CommonModal>
+    </RestartModal>
+    <EndRoundModal
+      v-if="isRoundEnd"
+      :winner="winner"
+      @close="closeNextRoundModal"
+      @accept="handleNextRoundConfirmed"
+    >
+    </EndRoundModal>
   </div>
 </template>
 
 <script>
 import GameBoard from "@/components/GameBoard.vue";
 import ViewHeader from "@/components/ViewHeader.vue";
-import CommonModal from "@/components/modal/CommonModal.vue";
-// import ViewFooter from "@/components/ViewFooter.vue";
+import ViewFooter from "@/components/ViewFooter.vue";
+import EndRoundModal from "@/components/smart/modal/EndRoundModal.vue";
+import RestartModal from "@/components/smart/modal/RestartModal.vue";
 
 export default {
   name: "GameView",
   components: {
     GameBoard,
     ViewHeader,
-    CommonModal,
-    // ViewFooter,
+    EndRoundModal,
+    RestartModal,
+    ViewFooter,
   },
   data() {
     return {
@@ -49,19 +54,10 @@ export default {
       restartRequest: false,
       triggerRestart: false,
       roundEnd: false,
-      // xScore: 0,
-      // oScore: 0,
-      // tiesScore: 0,
-      restartModal: {
-        title: "RESTART GAME?",
-        cancelBtn: "NO, CANCEL",
-        acceptBtn: "YES",
-      },
-      endRoundModal: {
-        title: "TAKES THE ROUND",
-        cancelBtn: "QUIT",
-        acceptBtn: "NEXT ROUND",
-      },
+      xScore: 0,
+      oScore: 0,
+      tiesScore: 0,
+      winner: "",
     };
   },
   computed: {
@@ -69,11 +65,14 @@ export default {
       return this.restartRequest;
     },
     isModalPopup() {
-      return this.restartRequest;
+      return this.isRestartPopup || this.isRoundEnd;
     },
     isRoundEnd() {
       return this.roundEnd;
     },
+  },
+  created() {
+    this.initGameHistory();
   },
   methods: {
     openRestartModal() {
@@ -82,22 +81,67 @@ export default {
     closeRestartModal() {
       this.restartRequest = false;
     },
+    openNextRoundModal() {
+      this.roundEnd = true;
+    },
+    closeNextRoundModal() {
+      this.roundEnd = false;
+    },
+    reEvaluateScoreBoard(winner) {
+      this.winner = winner;
+      switch (winner) {
+        case "X":
+          this.xScore++;
+          break;
+        case "O":
+          this.oScore++;
+          break;
+        case "tie":
+          this.tiesScore++;
+          break;
+        default:
+          null;
+      }
+      this.saveLocalStorage();
+    },
     handleRestartConfirmed() {
       this.triggerRestart = true;
+      this.closeRestartModal();
+      this.closeNextRoundModal();
       this.$nextTick(() => {
         this.triggerRestart = false;
       });
 
-      this.updateMatchDetails();
+      this.updateRoundDetails();
     },
-    updateMatchDetails(turn = 0, winner = null) {
-      console.log(
-        `🚀 ~ file: GameView.vue:95 ~ updateMatchDetails ~ this.currentPlayer: ${this.currentPlayer} , turn ${turn}`
-      );
+    handleNextRoundConfirmed() {
+      this.currentPlayer = "X";
+      this.handleRestartConfirmed();
+    },
+    updateRoundDetails(turn = 0, winner = null) {
       this.currentPlayer = turn % 2 === 0 ? "X" : "O";
 
       if ((winner !== null) & (turn !== 0)) {
-        this.currentPlayer = "X";
+        this.reEvaluateScoreBoard(winner);
+        this.openNextRoundModal(winner);
+      }
+    },
+    saveLocalStorage() {
+      const gameScore = {
+        xScore: this.xScore,
+        oScore: this.oScore,
+        tiesScore: this.tiesScore,
+      };
+      localStorage.setItem("gameScore", JSON.stringify(gameScore));
+    },
+    initGameHistory() {
+      const storedScore = localStorage.getItem("gameScore");
+      if (storedScore) {
+        const gameScore = JSON.parse(storedScore);
+
+        this.xScore = gameScore.xScore;
+        this.oScore = gameScore.oScore;
+        this.tiesScore = gameScore.tiesScore;
       }
     },
   },

@@ -3,10 +3,8 @@
     <div class="game-board">
       <GameBlock
         v-for="(cell, index) in board.flat()"
-        :key="index"
+        :key="`block-${index}-${cell}`"
         :mark="cell"
-        :current-player="currentPlayer"
-        :reset="triggerRestart"
         @blockClicked="markBlock(Math.floor(index / 3), index % 3)"
       />
     </div>
@@ -43,8 +41,8 @@ export default {
     };
   },
   watch: {
-    triggerRestart: function (newVal) {
-      if (newVal) {
+    triggerRestart(newVal, oldVal) {
+      if (newVal !== oldVal && newVal === true) {
         this.restartGame();
       }
     },
@@ -52,7 +50,7 @@ export default {
   methods: {
     markBlock(rowIndex, colIndex) {
       if (this.board[rowIndex][colIndex] === "") {
-        this.board[rowIndex][colIndex] = this.currentPlayer;
+        this.$set(this.board[rowIndex], colIndex, this.currentPlayer);
         this.turn++;
 
         if (this.checkWinner()) {
@@ -61,11 +59,7 @@ export default {
           this.winner = "tie";
         }
 
-        if (this.winner === null) {
-          this.$emit("playerTurnFinish", this.turn, this.winner);
-        } else {
-          this.restartGame();
-        }
+        this.$emit("playerTurnFinish", this.turn, this.winner);
       }
     },
     checkWinner() {
@@ -101,12 +95,12 @@ export default {
       return false;
     },
     restartGame() {
-      this.board = [
+      const emptyBoard = [
         ["", "", ""],
         ["", "", ""],
         ["", "", ""],
       ];
-      this.$emit("playerTurnFinish");
+      this.$set(this, "board", emptyBoard);
       this.winner = null;
       this.turn = 0;
     },

@@ -1,20 +1,24 @@
 <template>
   <div class="modal-container">
+    <div class="modal-description">
+      <slot name="modal-description"></slot>
+    </div>
     <div class="modal-title">
+      <slot name="modal-icon"></slot>
       <slot name="modal-title"></slot>
     </div>
     <div class="btn-container">
       <button
-        class="cancel-btn"
-        @click="closeModal"
+        class="close-btn"
+        @click="$emit('close')"
       >
-        <slot name="cancel-btn"></slot>
+        <slot name="close-btn">{{ closeBtn }}</slot>
       </button>
       <button
         class="accept-btn"
-        @click="confirmRestart"
+        @click="$emit('accept')"
       >
-        <slot name="accept-btn"></slot>
+        <slot name="accept-btn">{{ acceptBtn }}</slot>
       </button>
     </div>
   </div>
@@ -32,15 +36,6 @@ export default {
       default: "YES",
     },
   },
-  methods: {
-    closeModal() {
-      this.$emit("closeModal");
-    },
-    confirmRestart() {
-      this.$emit("triggerRestart");
-      this.closeModal();
-    },
-  },
 };
 </script>
 
@@ -56,8 +51,14 @@ export default {
   align-items: center;
   color: #979797;
 }
+.modal-description {
+  font-weight: bold;
+  font-size: 16px;
+  color: #a8bfc9;
+  margin: 0;
+}
 .modal-title {
-  display: block;
+  display: flex;
   font-size: 32px;
   margin-block-start: 0.83em;
   margin-block-end: 0.83em;
@@ -73,7 +74,7 @@ export default {
   justify-content: space-evenly;
   gap: 10px;
 
-  .cancel-btn,
+  .close-btn,
   .accept-btn {
     display: flex;
     align-items: center;
@@ -87,7 +88,7 @@ export default {
     border-radius: 10px;
     cursor: pointer;
   }
-  .cancel-btn {
+  .close-btn {
     background-color: #a8bfc9;
     box-shadow: 0 4px #6b8997;
   }

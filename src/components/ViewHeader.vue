@@ -1,12 +1,19 @@
 <template>
   <div class="view-header">
     <div class="mark-icons">
-      <GameIcon :icon-name="xIcon" />
-      <GameIcon :icon-name="oIcon" />
+      <GameIcon
+        class="x-icon"
+        :icon-name="xIcon"
+      />
+      <GameIcon
+        class="o-icon"
+        :icon-name="oIcon"
+      />
     </div>
 
     <div class="player-turn">
-      <GameIcon :icon-name="currentPlayerIcon()" />turn
+      <GameIcon :icon-name="currentPlayerIcon()" />
+      turn
     </div>
 
     <div class="restart">
@@ -21,7 +28,7 @@
 </template>
 
 <script>
-import GameIcon from "./GameIcon.vue";
+import GameIcon from "@/components/GameIcon.vue";
 import { FaIconEnum } from "@/constants/enum";
 
 export default {
@@ -53,7 +60,7 @@ export default {
 <style lang="scss" scoped>
 .view-header {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   width: 460px;
   margin-bottom: 30px;
@@ -77,7 +84,19 @@ export default {
 
   .mark-icons {
     display: flex;
-    align-items: flex-start;
+    align-items: center;
+  }
+  .x-icon {
+    width: 32px;
+    height: 32px;
+    color: #31c3bd;
+    font-size: 24px;
+  }
+  .o-icon {
+    width: 32px;
+    height: 32px;
+    color: #f2b137;
+    font-size: 24px;
   }
 
   .player-turn {
@@ -90,6 +109,7 @@ export default {
     box-shadow: 0 0 4px #10212a;
     color: #a8bfc9;
     box-shadow: 0 4px #10212a;
+    gap: 10px;
   }
   .restart {
     text-align: right;

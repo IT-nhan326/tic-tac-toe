@@ -25,18 +25,13 @@ export default {
   name: "GameBlock",
   components: { GameIcon },
   props: {
-    currentPlayer: {
+    mark: {
       type: String,
-      default: "X",
-    },
-    reset: {
-      type: Boolean,
-      default: false,
+      default: "",
     },
   },
   data() {
     return {
-      mark: "",
       xIcon: FaIconEnum.xIcon,
       oIcon: FaIconEnum.oIcon,
     };
@@ -49,19 +44,9 @@ export default {
       return this.mark === "O";
     },
   },
-  watch: {
-    reset(newValue) {
-      if (newValue) {
-        this.mark = null;
-      }
-    },
-  },
   methods: {
     markBlock() {
-      if (!this.mark) {
-        this.$emit("blockClicked");
-        this.mark = this.currentPlayer;
-      }
+      this.$emit("blockClicked");
     },
   },
 };
